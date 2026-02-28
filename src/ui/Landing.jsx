@@ -31,12 +31,15 @@ export default function Landing({ onEnter }) {
     const transitionStreams = useRef([])
     const manualPulseTriggered = useRef(0)
     const mouseRef = useRef({ x: -1000, y: -1000 })
+    const touchStartRef = useRef(null)
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
+            const isMobile = window.innerWidth < 768;
             const newParticles = [];
-            // 49 White electrons (reduced count, standardized size)
-            for (let i = 0; i < 49; i++) {
+
+            const electronCount = isMobile ? 25 : 49;
+            for (let i = 0; i < electronCount; i++) {
                 newParticles.push({
                     type: 'electron',
                     x: Math.random() * window.innerWidth,
@@ -47,8 +50,9 @@ export default function Landing({ onEnter }) {
                     alpha: Math.random() * 0.2 + 0.1
                 })
             }
-            // 17 White protons (reduced count, standardized size)
-            for (let i = 0; i < 17; i++) {
+
+            const protonCount = isMobile ? 8 : 17;
+            for (let i = 0; i < protonCount; i++) {
                 newParticles.push({
                     type: 'proton',
                     x: Math.random() * window.innerWidth,
@@ -139,12 +143,72 @@ export default function Landing({ onEnter }) {
             }
         };
 
+        const handleTouchStart = (e) => {
+            if (bootStage !== 'landing' || isTransitioning) return;
+            touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        };
+
+        const handleTouchMove = (e) => {
+            if (!touchStartRef.current || bootStage !== 'landing' || isTransitioning) return;
+        };
+
+        const handleTouchEnd = (e) => {
+            if (!touchStartRef.current || bootStage !== 'landing' || isTransitioning) return;
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+
+            const dx = touchEndX - touchStartRef.current.x;
+            const dy = touchEndY - touchStartRef.current.y;
+
+            touchStartRef.current = null;
+
+            const threshold = 40;
+
+            if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) return;
+
+            let targetDirection = viewDirectionRef.current;
+            const dir = viewDirectionRef.current;
+
+            if (dir === 'center') {
+                if (Math.abs(dy) > Math.abs(dx)) {
+                    if (dy > threshold) { // Swipe Down
+                        initiatePCBTransition();
+                        return;
+                    } else if (dy < -threshold) { // Swipe Up
+                        targetDirection = 'top';
+                    }
+                } else {
+                    if (dx > threshold) targetDirection = 'right'; // Swipe Right
+                    else if (dx < -threshold) targetDirection = 'left'; // Swipe Left
+                }
+            } else if (dir === 'left') {
+                if (dx > threshold || Math.abs(dy) > threshold) targetDirection = 'center';
+            } else if (dir === 'right') {
+                if (dx < -threshold || Math.abs(dy) > threshold) targetDirection = 'center';
+            } else if (dir === 'top') {
+                if (dy > threshold || Math.abs(dx) > threshold) targetDirection = 'center';
+            }
+
+            if (targetDirection !== dir) {
+                isTransitioning = true;
+                triggerDirectionalTransition(targetDirection, () => {
+                    isTransitioning = false;
+                });
+            }
+        };
+
         if (bootStage === 'landing') {
             window.addEventListener('wheel', handleWheel, { passive: false })
             window.addEventListener('keydown', handleKeyDown)
+            window.addEventListener('touchstart', handleTouchStart, { passive: true })
+            window.addEventListener('touchmove', handleTouchMove, { passive: true })
+            window.addEventListener('touchend', handleTouchEnd, { passive: true })
             return () => {
                 window.removeEventListener('wheel', handleWheel)
                 window.removeEventListener('keydown', handleKeyDown)
+                window.removeEventListener('touchstart', handleTouchStart)
+                window.removeEventListener('touchmove', handleTouchMove)
+                window.removeEventListener('touchend', handleTouchEnd)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

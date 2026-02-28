@@ -12,6 +12,7 @@ export default function HUD({ onReturnToCore }) {
     const [showOverlay, setShowOverlay] = useState(!isIntroShown)
     const [overlayExiting, setOverlayExiting] = useState(false)
     const [isRecharging, setIsRecharging] = useState(false)
+    const [mobileHint, setMobileHint] = useState(typeof window !== 'undefined' && window.innerWidth < 768 && !isIntroShown)
 
     // Keyboard commands
     useEffect(() => {
@@ -32,6 +33,10 @@ export default function HUD({ onReturnToCore }) {
                 setOverlayExiting(true)
             }, 2000)
 
+            const hintTimer = setTimeout(() => {
+                setMobileHint(false)
+            }, 4500)
+
             const removeTimer = setTimeout(() => {
                 setShowOverlay(false)
                 setIntroShown(true)
@@ -39,6 +44,7 @@ export default function HUD({ onReturnToCore }) {
 
             return () => {
                 clearTimeout(exitTimer)
+                clearTimeout(hintTimer)
                 clearTimeout(removeTimer)
             }
         }
@@ -153,13 +159,13 @@ export default function HUD({ onReturnToCore }) {
             )}
 
             {/* Top Bar */}
-            <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0" style={{ fontSize: 'clamp(12px, 2vw, 16px)' }}>
                 {/* Left diagnostic */}
                 <div className="w-full md:w-auto bg-[#0a1a12]/80 backdrop-blur-sm p-4 rounded-sm border-l-4 border-pcb-glow flex items-center space-x-3 shadow-lg pointer-events-auto">
                     <Cpu className="text-pcb-glow animate-pulse" size={24} />
                     <div>
-                        <h1 className="text-sm font-bold text-pcb-glow uppercase tracking-widest">System Core: Pankaj</h1>
-                        <p className="text-xs text-slate-300">Status: {isMoving ? 'ROUTING SIGNAL...' : 'ONLINE & STABLE'}</p>
+                        <h1 className="text-[1em] font-bold text-pcb-glow uppercase tracking-widest">System Core: Pankaj</h1>
+                        <p className="text-[0.8em] text-slate-300">Status: {isMoving ? 'ROUTING SIGNAL...' : 'ONLINE & STABLE'}</p>
                     </div>
                 </div>
 
@@ -169,7 +175,7 @@ export default function HUD({ onReturnToCore }) {
                     <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center space-x-3">
                         <Zap className={`text-pcb-glow ${energy < 20 ? 'animate-pulse text-red-500' : ''}`} size={18} />
                         <div className="flex-1">
-                            <div className="flex justify-between text-xs mb-1">
+                            <div className="flex justify-between text-[0.8em] mb-1">
                                 <span className="text-slate-400">System VCC</span>
                                 <span className="text-pcb-glow">{energy}%</span>
                             </div>
@@ -183,11 +189,11 @@ export default function HUD({ onReturnToCore }) {
                     </div>
 
                     <div className="flex space-x-2">
-                        <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center justify-between text-xs flex-1">
+                        <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center justify-between text-[0.8em] flex-1">
                             <span className="text-slate-500">Brain Freq</span>
                             <span className={`${energy <= 0 ? 'text-red-500 font-bold animate-pulse' : 'text-pcb-glow font-bold transition-all duration-300'}`}>{displayFreq} GHz</span>
                         </div>
-                        <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center justify-between text-xs flex-1">
+                        <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center justify-between text-[0.8em] flex-1">
                             <Activity size={14} className="text-slate-400 mr-2" />
                             <span className={`${energy <= 0 ? 'text-red-500 font-bold animate-pulse' : 'text-pcb-glow font-bold'}`}>{displaySignal} dBm</span>
                         </div>
@@ -223,6 +229,13 @@ export default function HUD({ onReturnToCore }) {
                         {isRecharging ? 'RECHARGING...' : 'INITIATE RECHARGE'}
                     </button>
                 </div>
+            </div>
+
+            {/* MOBILE NAVIGATION HINT */}
+            <div className={`absolute bottom-32 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none z-[60] transition-opacity duration-1000 ${mobileHint ? 'opacity-100' : 'opacity-0'} md:hidden bg-[#0a1a12]/90 p-4 border border-pcb-glow/50 rounded-lg shadow-[0_0_15px_rgba(0,255,136,0.2)] backdrop-blur-md`}>
+                <p className="text-pcb-glow text-xs font-bold font-mono tracking-widest uppercase mb-2">&gt; Touch Navigation</p>
+                <p className="text-white/80 text-xs font-mono text-center mb-1">Tap Nodes to Route Signal</p>
+                <p className="text-white/80 text-xs font-mono text-center">Scroll Up to Exit</p>
             </div>
 
         </div>

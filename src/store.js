@@ -248,6 +248,29 @@ export const useStore = create((set, get) => ({
         zoomLevel: Math.max(0.5, Math.min(2.0, state.zoomLevel + delta))
     })),
 
+    initiateMoveToNode: (targetId) => {
+        const state = get()
+        if (state.isMoving) return
+        if (state.energy <= 0) return // Block if VCC depleted
+        if (state.currentNode === targetId) return // Already there
+
+        const pathHash = `${state.currentNode}->${targetId}`
+        const trace = tracesData[pathHash]
+
+        if (trace) {
+            if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                try { navigator.vibrate(10); } catch (e) { }
+            }
+            set({
+                targetNode: targetId,
+                isMoving: true,
+                currentPath: trace.points,
+                activeTraceId: pathHash,
+                energy: Math.max(0, state.energy - 3)
+            })
+        }
+    },
+
     initiateMove: (directionKey) => {
         const state = get()
         if (state.isMoving) return

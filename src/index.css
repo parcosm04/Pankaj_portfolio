@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    overscroll-behavior: none;
+  }
   body {
-    @apply bg-pcb-bg text-white m-0 p-0 overflow-hidden font-sans;
+    @apply bg-pcb-bg text-white font-sans;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  #root {
+    width: 100vw;
+    height: 100vh;
+  }
+  canvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
   }
 }
 

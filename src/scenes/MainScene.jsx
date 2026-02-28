@@ -179,11 +179,13 @@ function FollowCamera() {
         desiredPosition.y += floatY
 
         // Interpolate quickly during the descent phase to cover the large Y=80 -> Y=25 distance smoothly
-        const lerpFactor = bootStage === 'descending' ? 2.5 * delta : 0.05
+        const isMobile = window.innerWidth < 768;
+        const baseLerp = isMobile ? 0.02 : 0.05;
+        const lerpFactor = bootStage === 'descending' ? 2.5 * delta : baseLerp
         camTarget.current.lerp(desiredPosition, lerpFactor)
 
         // Interpolate target direction instead of instant lookAt
-        lookTarget.current.lerp(electronPos, 0.08)
+        lookTarget.current.lerp(electronPos, isMobile ? 0.04 : 0.08)
 
         state.camera.position.copy(camTarget.current)
         state.camera.lookAt(lookTarget.current)

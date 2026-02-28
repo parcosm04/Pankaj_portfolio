@@ -6,9 +6,14 @@ import { useStore, nodesData } from '../store'
 // Central Hub Processor Model
 function MainProcessor({ isActive }) {
     const energy = useStore(state => state.energy)
+    const initiateMoveToNode = useStore(state => state.initiateMoveToNode)
 
     return (
-        <group>
+        <group
+            onClick={(e) => { e.stopPropagation(); initiateMoveToNode('center'); }}
+            onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; }}
+            onPointerOut={(e) => { document.body.style.cursor = 'auto'; }}
+        >
             {/* Massive IC Body */}
             <mesh receiveShadow castShadow position={[0, 1, 0]}>
                 <boxGeometry args={[14, 2, 14]} />
@@ -59,6 +64,7 @@ function MainProcessor({ isActive }) {
 // Smaller generic project IC node
 function ProjectIC({ isActive, isPower, id }) {
     const energy = useStore(state => state.energy)
+    const initiateMoveToNode = useStore(state => state.initiateMoveToNode)
 
     if (isPower) return null // Power inlet is handled in connected parts
 
@@ -66,7 +72,12 @@ function ProjectIC({ isActive, isPower, id }) {
     const heightVariant = (id.length % 3) * 0.1
 
     return (
-        <group position={[0, heightVariant, 0]}>
+        <group
+            position={[0, heightVariant, 0]}
+            onClick={(e) => { e.stopPropagation(); initiateMoveToNode(id); }}
+            onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; }}
+            onPointerOut={(e) => { document.body.style.cursor = 'auto'; }}
+        >
             <mesh receiveShadow castShadow position={[0, 0.75, 0]}>
                 <boxGeometry args={[10, 1.5, 10]} />
                 <meshStandardMaterial color="#151515" roughness={0.85} />
