@@ -164,10 +164,11 @@ function FollowCamera() {
             Math.sign(velocity.z) * (Math.abs(velocity.z) > 0.05 ? 3 : 0)
         )
 
-        // Use high offset during boot sequences, normal offset when ready
+        // Use high offset during boot sequences, normal offset when portrait-ready
         const isMobileScreen = window.innerWidth < 768;
-        const targetY = isBootingSequence ? 80 : (isMobileScreen ? 45 : 25)
-        const offset = new THREE.Vector3(0, targetY * (zoomLevel || 1.0), (isMobileScreen ? 45 : 35) * (zoomLevel || 1.0))
+        // Shift Z significantly back and slightly up for portrait alignment
+        const targetY = isBootingSequence ? 80 : (isMobileScreen ? 55 : 25)
+        const offset = new THREE.Vector3(0, targetY * (zoomLevel || 1.0), (isMobileScreen ? 60 : 35) * (zoomLevel || 1.0))
 
         // Micro floating idle animation
         const floatY = Math.sin(state.clock.elapsedTime * 0.3) * 0.2

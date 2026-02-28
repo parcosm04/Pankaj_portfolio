@@ -124,6 +124,10 @@ function GlowHalo() {
 }
 
 export default function EnvironmentEffects() {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    if (isMobile) return null;
+
     return (
         <group>
             <DataGrid />

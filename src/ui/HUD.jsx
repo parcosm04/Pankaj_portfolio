@@ -238,11 +238,7 @@ export default function HUD({ onReturnToCore }) {
                 <p className="text-white/80 text-xs font-mono text-center">Scroll Up to Exit</p>
             </div>
 
-            {/* ZOOM CONTROLS */}
-            <div className={`absolute bottom-8 right-8 pointer-events-auto flex flex-col gap-3 z-[60] transition-opacity duration-1000 ${bootStage !== 'ready' ? 'opacity-0' : 'opacity-100'}`}>
-                <button onClick={() => useStore.getState().setZoomLevel(-0.15)} className="w-10 h-10 rounded-full bg-[#0a1a12]/90 border border-pcb-glow/50 text-pcb-glow font-bold hover:bg-pcb-glow/20 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(0,255,136,0.2)] backdrop-blur-md transition-all active:scale-95" title="Zoom In">+</button>
-                <button onClick={() => useStore.getState().setZoomLevel(0.15)} className="w-10 h-10 rounded-full bg-[#0a1a12]/90 border border-pcb-glow/50 text-pcb-glow font-bold hover:bg-pcb-glow/20 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(0,255,136,0.2)] backdrop-blur-md transition-all active:scale-95" title="Zoom Out">−</button>
-            </div>
+
 
         </div>
     )

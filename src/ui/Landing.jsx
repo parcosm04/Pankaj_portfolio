@@ -676,7 +676,7 @@ export default function Landing({ onEnter }) {
                     </div>
 
                     {/* Left -> Contact */}
-                    <div className="absolute top-1/2 left-4 sm:left-6 md:left-10 transform -translate-y-1/2 flex items-center origin-left pointer-events-auto cursor-pointer group -rotate-90 md:rotate-0"
+                    <div className="absolute top-1/2 left-4 sm:left-6 md:left-10 transform -translate-y-1/2 flex items-center origin-left pointer-events-auto cursor-pointer group"
                         onClick={() => triggerDirectionalTransition('left')}>
                         <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-white/55 group-hover:text-white group-hover:scale-[1.08] group-hover:tracking-[0.45em] transition-all duration-[250ms] ease-out" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Contact</span>
                         <div className="hidden md:block w-12 h-[1px] bg-white/10 group-hover:w-[65px] group-hover:bg-white group-hover:translate-x-[10px] transition-all duration-[250ms] ease-out shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] mx-4"></div>
@@ -684,7 +684,7 @@ export default function Landing({ onEnter }) {
                     </div>
 
                     {/* Right -> Skills */}
-                    <div className="absolute top-1/2 right-4 sm:right-6 md:right-10 transform -translate-y-1/2 flex items-center origin-right pointer-events-auto cursor-pointer group rotate-90 md:rotate-0"
+                    <div className="absolute top-1/2 right-4 sm:right-6 md:right-10 transform -translate-y-1/2 flex items-center origin-right pointer-events-auto cursor-pointer group"
                         onClick={() => triggerDirectionalTransition('right')}>
                         <span className="mr-4 text-white/60 text-[10px] font-sans opacity-0 transform translate-x-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0 hidden md:block">←</span>
                         <div className="hidden md:block w-12 h-[1px] bg-white/10 group-hover:w-[65px] group-hover:bg-white group-hover:-translate-x-[10px] transition-all duration-[250ms] ease-out shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] mr-4"></div>

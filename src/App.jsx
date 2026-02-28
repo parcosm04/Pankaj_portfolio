@@ -12,6 +12,10 @@ import Landing from './ui/Landing'
 
 function DynamicEffects() {
   const isMoving = useStore((state) => state.isMoving)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  // Extremely strict mobile optimization - save all GPU render
+  if (isMobile) return null;
 
   return (
     <EffectComposer disableNormalPass>
@@ -132,12 +136,59 @@ function App() {
       }
     }
 
+    // Touch event variables for pinch zoom
+    let initialPinchDistance = null;
+    let initialZoomLevel = null;
+
+    const handleTouchStart = (e) => {
+      if (e.touches.length === 2) {
+        // Calculate initial distance between two fingers
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        initialPinchDistance = Math.sqrt(dx * dx + dy * dy);
+        initialZoomLevel = useStore.getState().zoomLevel;
+      }
+    }
+
+    const handleTouchMove = (e) => {
+      if (e.touches.length === 2 && initialPinchDistance !== null && initialZoomLevel !== null) {
+        // Prevent default browser zoom/scroll while pinching
+        e.preventDefault();
+
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const currentDistance = Math.sqrt(dx * dx + dy * dy);
+
+        // Calculate pinch ratio
+        const ratio = Math.max(0.2, Math.min(3.0, initialPinchDistance / currentDistance));
+
+        // Use zustand set directly to bypass the incremental setZoomLevel limits if it only allows +delta
+        const nextZoom = Math.max(0.5, Math.min(2.5, initialZoomLevel * ratio));
+        useStore.setState({ zoomLevel: nextZoom });
+      }
+    }
+
+    const handleTouchEnd = (e) => {
+      if (e.touches.length < 2) {
+        initialPinchDistance = null;
+        initialZoomLevel = null;
+      }
+    }
+
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('wheel', handleWheel, { passive: false })
+
+    // Non-passive so we can preventDefault
+    window.addEventListener('touchstart', handleTouchStart, { passive: false })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+    window.addEventListener('touchend', handleTouchEnd)
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
     }
   }, [initiateMove, hasEntered])
 
