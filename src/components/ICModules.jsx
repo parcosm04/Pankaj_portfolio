@@ -128,35 +128,37 @@ function FloatingHUD({ node }) {
                 className="pointer-events-none"
             >
                 {/* Holographic Panel UI Upgrade - Glassmorphism, Neon glow border */}
-                <div className="bg-[#05150c]/50 backdrop-blur-xl border border-pcb-glow/60 shadow-[0_0_25px_rgba(0,255,136,0.3)] text-white p-5 rounded-lg w-72 transition-all duration-500 animate-fade-in-up">
-                    <div className="flex items-center space-x-3 mb-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-pcb-glow animate-pulse block shadow-[0_0_10px_#00ff88]"></span>
-                        <h2 className="font-bold text-sm tracking-widest uppercase text-pcb-glow drop-shadow-md border-b border-pcb-trace/40 pb-1 w-full flex-1">
-                            {node.label}
-                        </h2>
-                    </div>
+                <div className="ic-panel-wrapper">
+                    <div className="ic-panel-content mx-auto bg-[#05150c]/50 backdrop-blur-xl border border-pcb-glow/60 shadow-[0_0_25px_rgba(0,255,136,0.3)] text-white p-5 rounded-lg w-72 transition-all duration-500 animate-fade-in-up">
+                        <div className="flex items-center space-x-3 mb-3">
+                            <span className="w-2.5 h-2.5 rounded-full bg-pcb-glow animate-pulse block shadow-[0_0_10px_#00ff88]"></span>
+                            <h2 className="font-bold text-sm tracking-widest uppercase text-pcb-glow drop-shadow-md border-b border-pcb-trace/40 pb-1 w-full flex-1">
+                                {node.label}
+                            </h2>
+                        </div>
 
-                    <div className="text-xs font-mono text-[#aaffcc] space-y-2 drop-shadow-sm leading-relaxed">
-                        {node.details ? node.details.map((detail, idx) => {
-                            if (detail.isHeader) {
-                                return <p key={idx}>&gt; <span className="text-pcb-bg font-bold bg-[#aaffcc] px-1 rounded-sm">{detail.label}</span></p>
-                            } else if (detail.text) {
-                                return <p key={idx} className="text-slate-200 opacity-90">&gt; {detail.text}</p>
-                            } else if (detail.key) {
-                                return (
-                                    <p key={idx}>
-                                        &gt; {detail.key}:{' '}
-                                        <span className={detail.key === 'STATUS' ? 'text-pcb-glow' : 'text-white'}>
-                                            {detail.val}
-                                        </span>
-                                    </p>
-                                )
-                            }
-                            return null;
-                        }) : (
-                            // Fallback if details are missing
-                            <p>&gt; <span className="text-white animate-pulse">Routing Details...</span></p>
-                        )}
+                        <div className="text-xs font-mono text-[#aaffcc] space-y-2 drop-shadow-sm leading-relaxed">
+                            {node.details ? node.details.map((detail, idx) => {
+                                if (detail.isHeader) {
+                                    return <p key={idx}>&gt; <span className="text-pcb-bg font-bold bg-[#aaffcc] px-1 rounded-sm">{detail.label}</span></p>
+                                } else if (detail.text) {
+                                    return <p key={idx} className="text-slate-200 opacity-90">&gt; {detail.text}</p>
+                                } else if (detail.key) {
+                                    return (
+                                        <p key={idx}>
+                                            &gt; {detail.key}:{' '}
+                                            <span className={detail.key === 'STATUS' ? 'text-pcb-glow' : 'text-white'}>
+                                                {detail.val}
+                                            </span>
+                                        </p>
+                                    )
+                                }
+                                return null;
+                            }) : (
+                                // Fallback if details are missing
+                                <p>&gt; <span className="text-white animate-pulse">Routing Details...</span></p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </Html>

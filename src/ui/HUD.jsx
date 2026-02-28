@@ -188,7 +188,7 @@ export default function HUD({ onReturnToCore }) {
                         </div>
                     </div>
 
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 dashboard-advanced">
                         <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center justify-between text-[0.8em] flex-1">
                             <span className="text-slate-500">Brain Freq</span>
                             <span className={`${energy <= 0 ? 'text-red-500 font-bold animate-pulse' : 'text-pcb-glow font-bold transition-all duration-300'}`}>{displayFreq} GHz</span>
@@ -236,6 +236,12 @@ export default function HUD({ onReturnToCore }) {
                 <p className="text-pcb-glow text-xs font-bold font-mono tracking-widest uppercase mb-2">&gt; Touch Navigation</p>
                 <p className="text-white/80 text-xs font-mono text-center mb-1">Tap Nodes to Route Signal</p>
                 <p className="text-white/80 text-xs font-mono text-center">Scroll Up to Exit</p>
+            </div>
+
+            {/* ZOOM CONTROLS */}
+            <div className={`absolute bottom-8 right-8 pointer-events-auto flex flex-col gap-3 z-[60] transition-opacity duration-1000 ${bootStage !== 'ready' ? 'opacity-0' : 'opacity-100'}`}>
+                <button onClick={() => useStore.getState().setZoomLevel(-0.15)} className="w-10 h-10 rounded-full bg-[#0a1a12]/90 border border-pcb-glow/50 text-pcb-glow font-bold hover:bg-pcb-glow/20 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(0,255,136,0.2)] backdrop-blur-md transition-all active:scale-95" title="Zoom In">+</button>
+                <button onClick={() => useStore.getState().setZoomLevel(0.15)} className="w-10 h-10 rounded-full bg-[#0a1a12]/90 border border-pcb-glow/50 text-pcb-glow font-bold hover:bg-pcb-glow/20 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(0,255,136,0.2)] backdrop-blur-md transition-all active:scale-95" title="Zoom Out">−</button>
             </div>
 
         </div>

@@ -25,7 +25,8 @@ function DataGrid() {
 }
 
 function FloatingParticles() {
-    const count = 100
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobile ? 30 : 100
     const pointsRef = useRef()
 
     // Create random positions initially
