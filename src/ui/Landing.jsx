@@ -584,20 +584,19 @@ export default function Landing({ onEnter }) {
                     className="relative flex flex-col items-center justify-center pointer-events-auto z-20"
                     onMouseEnter={handleNameHover}
                     onMouseLeave={handleNameLeave}>
-                    <h1 className="text-3xl md:text-5xl font-normal tracking-[0.3em] text-white/90 select-none ml-[0.3em] cursor-default">
+                    <h1 className="text-2xl sm:text-3xl md:text-5xl font-normal tracking-[0.3em] text-white/90 select-none cursor-default text-center pl-[0.3em]">
                         {nameText}
                     </h1>
 
-                    <h2 ref={subtitleGlowRef} className="mt-[20px] text-[9px] md:text-[11px] font-mono tracking-[0.3em] text-white/80 uppercase select-none flex items-center opacity-80 transition-opacity cursor-default">
-                        {/* Reduced Green Intensity */}
-                        <span className="text-[#00FF41]/40 mr-3">&gt;</span> Electronics & Intelligent Systems Engineer
+                    <h2 ref={subtitleGlowRef} className="mt-[15px] md:mt-[20px] text-[#00FF41]/40 text-[8px] sm:text-[9px] md:text-[11px] font-mono tracking-[0.2em] md:tracking-[0.3em] uppercase select-none flex items-center opacity-80 transition-opacity cursor-default max-w-[95%] text-center justify-center">
+                        <span className="text-[#00FF41]/40 mr-2 md:mr-3">&gt;</span> <span className="text-white/80">Electronics & Intelligent Systems Engineer</span>
                     </h2>
                 </div>
 
                 {/* Clickable Directional Navigation (Minimalist) */}
                 <div className="absolute inset-0 pointer-events-none z-30 opacity-100 nav-indicators">
                     {/* Up -> About */}
-                    <div className="absolute top-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-pointer group"
+                    <div className="absolute top-6 sm:top-8 md:top-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-pointer group"
                         onClick={() => triggerDirectionalTransition('top')}>
                         <span className="mb-4 text-white/60 text-[10px] font-sans opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 text-center">↑</span>
                         <div className="w-[1px] h-12 bg-white/10 group-hover:bg-white group-hover:h-[65px] group-hover:translate-y-[10px] transition-all duration-[250ms] ease-out shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
@@ -605,7 +604,7 @@ export default function Landing({ onEnter }) {
                     </div>
 
                     {/* Down -> Projects */}
-                    <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-pointer group"
+                    <div className="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-pointer group"
                         onClick={initiatePCBTransition}>
                         <span className="text-[10px] font-mono tracking-[0.4em] uppercase mb-3 text-white/55 group-hover:text-white group-hover:scale-[1.08] group-hover:tracking-[0.45em] transition-all duration-[250ms] ease-out">Projects</span>
                         <div className="w-[1px] h-12 bg-white/10 group-hover:bg-white group-hover:h-[65px] group-hover:-translate-y-[10px] transition-all duration-[250ms] ease-out shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
@@ -613,7 +612,7 @@ export default function Landing({ onEnter }) {
                     </div>
 
                     {/* Left -> Contact */}
-                    <div className="absolute top-1/2 left-10 transform -translate-y-1/2 flex items-center origin-left pointer-events-auto cursor-pointer group -rotate-90 md:rotate-0"
+                    <div className="absolute top-1/2 left-4 sm:left-6 md:left-10 transform -translate-y-1/2 flex items-center origin-left pointer-events-auto cursor-pointer group -rotate-90 md:rotate-0"
                         onClick={() => triggerDirectionalTransition('left')}>
                         <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-white/55 group-hover:text-white group-hover:scale-[1.08] group-hover:tracking-[0.45em] transition-all duration-[250ms] ease-out" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Contact</span>
                         <div className="hidden md:block w-12 h-[1px] bg-white/10 group-hover:w-[65px] group-hover:bg-white group-hover:translate-x-[10px] transition-all duration-[250ms] ease-out shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] mx-4"></div>
@@ -621,7 +620,7 @@ export default function Landing({ onEnter }) {
                     </div>
 
                     {/* Right -> Skills */}
-                    <div className="absolute top-1/2 right-10 transform -translate-y-1/2 flex items-center origin-right pointer-events-auto cursor-pointer group rotate-90 md:rotate-0"
+                    <div className="absolute top-1/2 right-4 sm:right-6 md:right-10 transform -translate-y-1/2 flex items-center origin-right pointer-events-auto cursor-pointer group rotate-90 md:rotate-0"
                         onClick={() => triggerDirectionalTransition('right')}>
                         <span className="mr-4 text-white/60 text-[10px] font-sans opacity-0 transform translate-x-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0 hidden md:block">←</span>
                         <div className="hidden md:block w-12 h-[1px] bg-white/10 group-hover:w-[65px] group-hover:bg-white group-hover:-translate-x-[10px] transition-all duration-[250ms] ease-out shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] mr-4"></div>
@@ -632,11 +631,11 @@ export default function Landing({ onEnter }) {
 
             {/* VIEW: CONTACT (LEFT) */}
             <div ref={leftViewRef} className="absolute inset-0 flex flex-col items-center justify-center z-20 hidden" style={{ display: 'none' }}>
-                <div className="flex flex-col items-center mb-10">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-[0.4em] text-white uppercase border-b border-white/30 pb-3 w-64 text-center">CONTACT</h2>
+                <div className="flex flex-col items-center mb-8 md:mb-10 mt-12 md:mt-0">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-[0.3em] md:tracking-[0.4em] text-white uppercase border-b border-white/30 pb-3 w-56 sm:w-64 text-center">CONTACT</h2>
                 </div>
 
-                <div className="flex flex-col gap-6 text-center w-[80%] max-w-[400px]">
+                <div className="flex flex-col gap-4 md:gap-6 text-center w-[90%] md:w-[80%] max-w-[400px]">
                     {[
                         { label: 'EMAIL', value: 'pankajpandi0426@gmail.com', href: 'mailto:pankajpandi0426@gmail.com' },
                         { label: 'LINKEDIN', value: 'linkedin.com/in/pankaj-pandit-96b952318', href: 'https://www.linkedin.com/in/pankaj-pandit-96b952318' },
@@ -671,9 +670,9 @@ export default function Landing({ onEnter }) {
 
             {/* VIEW: SKILLS (RIGHT) */}
             <div ref={rightViewRef} className="absolute inset-0 flex flex-col items-center justify-center z-20 hidden" style={{ display: 'none' }}>
-                <h2 className="text-2xl md:text-3xl font-normal tracking-[0.4em] text-white/90 mb-8 uppercase">Capabilities</h2>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-normal tracking-[0.3em] md:tracking-[0.4em] text-white/90 mb-4 md:mb-8 uppercase mt-8 md:mt-0">Capabilities</h2>
 
-                <div className="grid grid-cols-2 gap-x-16 gap-y-12 w-[80%] max-w-[800px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-6 md:gap-y-12 w-[90%] md:w-[80%] max-w-[800px] max-h-[70vh] overflow-y-auto style-scrollbar pb-6 px-2 md:max-h-none md:overflow-visible md:px-0">
                     {skillGroups.map((group, index) => (
                         <div key={index} className="flex flex-col items-center text-center w-full">
                             <h3 className="text-[10px] font-sans font-medium tracking-[0.3em] text-white/90 uppercase mb-4 w-[85%] border-b border-white/20 pb-2">{group.title}</h3>
@@ -703,11 +702,11 @@ export default function Landing({ onEnter }) {
 
             {/* VIEW: ABOUT (TOP) */}
             <div ref={topViewRef} className="absolute inset-0 flex flex-col items-center justify-center z-20 hidden" style={{ display: 'none' }}>
-                <div className="flex flex-col items-center mb-10">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-[0.4em] text-white uppercase border-b border-white/30 pb-3 w-72 text-center">ABOUT THE SYSTEM</h2>
+                <div className="flex flex-col items-center mb-6 md:mb-10 mt-12 md:mt-0">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-[0.3em] md:tracking-[0.4em] text-white uppercase border-b border-white/30 pb-2 sm:pb-3 w-64 sm:w-72 text-center">ABOUT THE SYSTEM</h2>
                 </div>
 
-                <div className="flex flex-col gap-8 w-[80%] max-w-[500px] text-center">
+                <div className="flex flex-col gap-5 md:gap-8 w-[90%] md:w-[80%] max-w-[500px] text-center max-h-[70vh] overflow-y-auto style-scrollbar pb-8 px-2 md:max-h-none md:overflow-visible md:px-0">
                     <div>
                         <h3 className="text-[10px] font-mono tracking-[0.3em] text-white/50 uppercase mb-2">ENGINEER PROFILE</h3>
                         <p className="text-sm font-sans text-white">Electronics & Intelligent Systems Enthusiast</p>

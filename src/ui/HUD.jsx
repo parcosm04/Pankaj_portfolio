@@ -153,9 +153,9 @@ export default function HUD({ onReturnToCore }) {
             )}
 
             {/* Top Bar */}
-            <div className="flex justify-between items-start">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0">
                 {/* Left diagnostic */}
-                <div className="bg-[#0a1a12]/80 backdrop-blur-sm p-4 rounded-sm border-l-4 border-pcb-glow flex items-center space-x-3 shadow-lg pointer-events-auto">
+                <div className="w-full md:w-auto bg-[#0a1a12]/80 backdrop-blur-sm p-4 rounded-sm border-l-4 border-pcb-glow flex items-center space-x-3 shadow-lg pointer-events-auto">
                     <Cpu className="text-pcb-glow animate-pulse" size={24} />
                     <div>
                         <h1 className="text-sm font-bold text-pcb-glow uppercase tracking-widest">System Core: Pankaj</h1>
@@ -164,7 +164,7 @@ export default function HUD({ onReturnToCore }) {
                 </div>
 
                 {/* Right vitals */}
-                <div className="flex flex-col space-y-3 pointer-events-auto w-64">
+                <div className="flex flex-col space-y-3 pointer-events-auto w-full md:w-64">
 
                     <div className="bg-[#0a1a12]/80 p-3 rounded-sm border border-pcb-glow/30 flex items-center space-x-3">
                         <Zap className={`text-pcb-glow ${energy < 20 ? 'animate-pulse text-red-500' : ''}`} size={18} />
@@ -211,9 +211,9 @@ export default function HUD({ onReturnToCore }) {
 
             {/* POWER FAILURE POPUP */}
             <div className={`absolute inset-0 flex items-center justify-center pointer-events-none z-40 transition-all duration-300 ${energy <= 0 && energy < 25 ? 'opacity-100 backdrop-blur-[2px]' : 'opacity-0 backdrop-blur-0'}`}>
-                <div className={`pointer-events-auto bg-[#050505]/95 border border-white/20 p-8 flex flex-col items-center max-w-[400px] shadow-[0_0_50px_rgba(0,0,0,0.8)] transition-transform duration-500 ${energy <= 0 && !isRecharging ? 'scale-100' : 'scale-95'}`}>
+                <div className={`pointer-events-auto bg-[#050505]/95 border border-white/20 p-6 md:p-8 flex flex-col items-center w-[90%] max-w-[400px] shadow-[0_0_50px_rgba(0,0,0,0.8)] transition-transform duration-500 ${energy <= 0 && !isRecharging ? 'scale-100' : 'scale-95'}`}>
                     <AlertTriangle className="text-red-500 mb-4 animate-pulse" size={32} />
-                    <h2 className="text-xl font-bold tracking-[0.4em] text-white mb-2 uppercase text-center">Power Failure</h2>
+                    <h2 className="text-lg md:text-xl font-bold tracking-[0.3em] md:tracking-[0.4em] text-white mb-2 uppercase text-center">Power Failure</h2>
                     <p className="text-xs font-mono text-slate-400 mb-8 text-center leading-relaxed">System VCC Depleted.<br />Signal Transmission Halted.</p>
                     <button
                         onClick={handleRecharge}
