@@ -224,6 +224,12 @@ function App() {
 
       {/* Master Transition Overlay for Exiting PCB World */}
       <div id="global-transition-overlay" className="absolute inset-0 z-[100] bg-black pointer-events-none opacity-0"></div>
+
+      {/* Global Footer */}
+      <div className="absolute bottom-2 left-0 right-0 text-center text-[10px] sm:text-xs text-white/50 z-[110] pointer-events-none pb-[env(safe-area-inset-bottom)]">
+        <p>© 2026 Pankaj Pandit | Personal Portfolio</p>
+        <p>This website does not collect sensitive personal data.</p>
+      </div>
     </div>
   )
 }
