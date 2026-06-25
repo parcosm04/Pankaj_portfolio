@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import gsap from 'gsap'
 import { Canvas } from '@react-three/fiber'
-import { BakeShadows } from '@react-three/drei'
+import { BakeShadows, PerformanceMonitor } from '@react-three/drei'
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing'
 
 import { useStore } from './store'
@@ -12,10 +12,11 @@ import Landing from './ui/Landing'
 
 function DynamicEffects() {
   const isMoving = useStore((state) => state.isMoving)
+  const quality = useStore((state) => state.quality)
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // Extremely strict mobile optimization - save all GPU render
-  if (isMobile) return null;
+  if (isMobile || quality === 'low') return null;
 
   return (
     <EffectComposer disableNormalPass>
@@ -90,6 +91,7 @@ function AudioSystem() {
 function App() {
   const initiateMove = useStore((state) => state.initiateMove)
   const bootStage = useStore((state) => state.bootStage)
+  const quality = useStore((state) => state.quality)
   const [hasEntered, setHasEntered] = useState(false)
 
   const handleReturnToCore = () => {
@@ -205,11 +207,15 @@ function App() {
 
       {/* 3D Canvas Layer */}
       <Canvas
-        shadows
+        shadows={quality === 'high'}
         className="absolute inset-0 z-0 transparent"
-        gl={{ alpha: true, antialias: true }}
-        dpr={[1, 1.5]}
+        gl={{ alpha: true, antialias: quality === 'high', powerPreference: "high-performance" }}
+        dpr={quality === 'low' ? 1 : [1, 1.5]}
       >
+        <PerformanceMonitor 
+          onDecline={() => useStore.getState().setQuality('low')}
+          onIncline={() => useStore.getState().setQuality('high')}
+        />
         <MainScene />
         <EnvironmentEffects />
         <DynamicEffects />

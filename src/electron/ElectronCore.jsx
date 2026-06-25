@@ -9,7 +9,7 @@ export default function ElectronCore() {
     const meshRef = useRef()
     const lightRef = useRef()
 
-    const { isMoving, currentPath, completeMove, currentNode, bootStage } = useStore()
+    const { isMoving, currentPath, completeMove, currentNode, bootStage, quality } = useStore()
     const spawnVal = useRef({ scale: 0, light: 0 })
 
     useEffect(() => {
@@ -119,7 +119,7 @@ export default function ElectronCore() {
                     </mesh>
 
                     {/* 2-4 small floating spark particles */}
-                    <Sparkles count={3} scale={1.5} size={3.5} color="#aaffcc" speed={0.4} />
+                    {quality === 'high' && <Sparkles count={3} scale={1.5} size={3.5} color="#aaffcc" speed={0.4} />}
                 </mesh>
             </Trail>
 
@@ -129,7 +129,7 @@ export default function ElectronCore() {
                 intensity={3}
                 distance={8}
                 decay={2}
-                castShadow
+                // Removed castShadow on moving light as BakeShadows breaks it and it tanks performance
             />
         </group>
     )

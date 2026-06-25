@@ -240,7 +240,9 @@ export const useStore = create((set, get) => ({
     zoomLevel: 1.0,
     toggleLeft: false,
     toggleRight: false,
+    quality: 'high',
 
+    setQuality: (quality) => set({ quality }),
     setBootStage: (stage) => set({ bootStage: stage }),
     setIntroShown: (val) => set({ isIntroShown: val }),
 

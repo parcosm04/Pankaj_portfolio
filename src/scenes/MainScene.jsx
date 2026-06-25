@@ -212,7 +212,7 @@ export default function MainScene() {
             <ambientLight intensity={0.1} color="#ffffff" />
 
             {/* Soft top light */}
-            <directionalLight position={[0, 40, 5]} intensity={0.9} castShadow shadow-mapSize={[2048, 2048]} color="#ffffff" shadow-bias={-0.0001} />
+            <directionalLight position={[0, 40, 5]} intensity={0.9} castShadow shadow-mapSize={[1024, 1024]} color="#ffffff" shadow-bias={-0.0001} />
 
             {/* Slight rim light from back-right */}
             <directionalLight position={[40, 10, -40]} intensity={0.15} color="#00ff88" />

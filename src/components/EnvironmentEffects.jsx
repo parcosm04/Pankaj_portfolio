@@ -125,8 +125,9 @@ function GlowHalo() {
 
 export default function EnvironmentEffects() {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const quality = useStore(state => state.quality);
 
-    if (isMobile) return null;
+    if (isMobile || quality === 'low') return null;
 
     return (
         <group>
